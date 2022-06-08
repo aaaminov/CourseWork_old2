@@ -1,0 +1,50 @@
+﻿<Page x:Class="AMusic.UI.Pages.Dialog.HelloPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AMusic.UI.Pages.Dialog"
+      mc:Ignorable="d"
+      Title="HelloPage"
+      MinWidth="4in" MinHeight="2.6in" 
+      Width="auto" Height="auto" 
+      MaxWidth="4in" MaxHeight="3in">
+
+    <Border Style="{DynamicResource background_dialog}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{DynamicResource header}"
+                       Margin="16"
+                       Text="AMusic"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" />
+
+            <TextBlock Style="{DynamicResource header_1}"
+                       Margin="8, 56, 8, 8"
+                       Text="Здесь будет описание   данного приложения"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom" />
+
+            <StackPanel Grid.Row="1"
+                        Margin="16">
+                <Button Style="{DynamicResource btn_primary}"
+                        x:Name="btnToRegisterPage"
+                        Click="btnToRegisterPage_Click">
+                    <TextBlock Text="Зарегистрироваться"
+                               Foreground="{DynamicResource text_foreground_1}" />
+                </Button>
+                <Button Style="{DynamicResource btn_secondary}"
+                        x:Name="btnToLoginPage"
+                        Click="btnToLoginPage_Click">
+                    <TextBlock Text="Войти"
+                               Foreground="{DynamicResource text_foreground_1}" />
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Page>

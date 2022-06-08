@@ -1,0 +1,224 @@
+﻿<Page x:Class="AMusic.UI.Pages.Browser.SearchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:AMusic.UI.Pages.Browser"
+      mc:Ignorable="d"
+      d:DesignHeight="720"
+      d:DesignWidth="1280"
+      Title="SearchPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px" /> <!--0.8in-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Panel.ZIndex="1"
+              Background="{StaticResource grid_background_2}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="gridTopPanel"
+                  Grid.ColumnSpan="2"
+                  Background="{Binding track_main_color, FallbackValue={StaticResource grid_background_top_panel}}" />
+
+            <TextBox Text=""
+                     TextChanged="TBxSearch_TextChanged"
+                     x:Name="TBxSearch"
+                     Margin="108, 0, 0, 0">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius"
+                                Value="15" />
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock x:Name="TBkSearchPlaceholder" 
+                       Foreground="{DynamicResource text_foreground_4}"
+                       PreviewMouseDown="TBkSearchPlaceholder_PreviewMouseDown"
+                       Text="Поиск"
+                       VerticalAlignment="Center"
+                       Margin="119, 0, 0, 0" />
+
+            <Separator Grid.ColumnSpan="2"
+                       Background="{StaticResource separator_background_1}"
+                       VerticalAlignment="Bottom"
+                       Margin="0"/>
+
+        </Grid>
+        
+        <ScrollViewer x:Name="svMain"
+                      Style="{StaticResource scrollviewer_over_content}"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="2"
+                      Panel.ZIndex="0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical"
+                        Margin="12, 12, 0, 12">
+                <!--<Grid Height="0.9in"></Grid>-->
+                <TextBlock x:Name="TBxForNullResult" 
+                           Text="По вашему запросу ничего не найдено :(" 
+                           Style="{DynamicResource header_1}"
+                           Foreground="{DynamicResource text_foreground_2}"
+                           Margin="8, 0, 0, 16"
+                           Visibility="Collapsed" />
+                <StackPanel x:Name="spForFindedAlbums"
+                            Orientation="Vertical"
+                            Margin="0, 0, 0, 24"
+                            Visibility="Collapsed">                    
+                    <!-- FindedAlbums -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 0, 0, 8"
+                               Text="Найденные альбомы" />
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  Padding="0">
+                        <ListView x:Name="lvFindedAlbums"
+                                  ItemTemplate="{StaticResource SquareAlbum}"
+                                  SelectionChanged="lvFindedAlbums_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                        </ListView>
+                    </ScrollViewer>
+                </StackPanel>
+                <StackPanel x:Name="spForFindedTracks"
+                            Orientation="Vertical"
+                            Margin="0, 0, 0, 24"
+                            Visibility="Collapsed">
+                    <!-- FindedTracks -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 8, 0, 8"
+                               Text="Найденные треки" />
+                    <!-- Header -->
+                    <Grid Margin="4, 4, 4, 0">
+                        <Grid.ColumnDefinitions>
+                            <!--<ColumnDefinition Width="auto"  MinWidth="42px" /> --><!--id-->
+                            <ColumnDefinition Width="48px" /> <!--cover-->
+                            <ColumnDefinition Width="5*" /> <!--title-->
+                            <ColumnDefinition Width="4*" /> <!--album-->
+                            <!--<ColumnDefinition Width="1.7*" MinWidth="126px" /> --><!--when added-->
+                            <ColumnDefinition Width="1.4*" MinWidth="104px" /> <!--duration-->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="8" /> <!--for separator-->
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.ColumnSpan="2"
+                                Margin="4, 0, 0, 0"
+                                Style="{StaticResource btn_header}"
+                                Content="Название"
+                                x:Name="btnFromHeaderTitle" />
+                        <Button Grid.Column="2"
+                                Style="{StaticResource btn_header}"
+                                Content="Альбом" />
+                        <Button Grid.Column="3"
+                                Style="{StaticResource btn_header}"
+                                Content="Длительность"
+                                x:Name="btnFromHeaderDuration"
+                                HorizontalAlignment="Center" />
+
+                        <Separator Grid.ColumnSpan="5"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Bottom"
+                                   Background="{StaticResource separator_background_2}" />
+
+                    </Grid>
+
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="0">
+                        <ListView x:Name="lvFindedTracks"
+                                  ItemTemplate="{StaticResource LineTrack_1}"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="Padding"
+                                            Value="1" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                        </ListView>
+                    </ScrollViewer>
+                    
+                </StackPanel>
+
+
+                <!-- TopGenres -->
+                <TextBlock Style="{DynamicResource header_1}"
+                           Margin="8, 0, 0, 8"
+                           Text="Жанры" />
+                <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Hidden"
+                              Padding="0">
+                    <ListView x:Name="lvTopGenres"
+                              SelectionChanged="lvTopGenres_SelectionChanged"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Transparent"
+                                        CornerRadius="8"
+                                        Margin="4"
+                                        Background="{Binding item_background, FallbackValue={StaticResource black}}">
+                                    <Grid Width="auto"
+                                          MinWidth="2.8in"
+                                          Height="1.5in">
+                                        <Grid Visibility="{Binding IsExistsTracks}"
+                                              Width="1.5in"
+                                              Margin="1in, 0, 0, 0"
+                                              HorizontalAlignment="Right">
+                                            <Image Source="{Binding TopTrackFromGenre}" />
+                                            <Grid>
+                                                <Grid.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5"
+                                                                         EndPoint="1,0.5">
+                                                        <GradientStop Color="{Binding item_background, FallbackValue={StaticResource black}}"
+                                                                      Offset="0" />
+                                                        <GradientStop Color="#00000000"
+                                                                      Offset="1" />
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                            </Grid>
+                                        </Grid>
+                                        <TextBlock Style="{DynamicResource from_list_genre}"
+                                                   Text="{Binding title}" />
+                                        <!--<TextBlock Style="{DynamicResource from_list_genre}"
+                                                   Text="{Binding item_background}"
+                                                   VerticalAlignment="Bottom"/>-->
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </ScrollViewer>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+    
+</Page>

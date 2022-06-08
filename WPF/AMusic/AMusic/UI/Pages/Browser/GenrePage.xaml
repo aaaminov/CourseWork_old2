@@ -1,0 +1,121 @@
+﻿<Page x:Class="AMusic.UI.Pages.Browser.GenrePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AMusic.UI.Pages.Browser"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GenrePage">
+
+    <Grid>
+        <ScrollViewer x:Name="svMain"
+                      Style="{StaticResource scrollviewer_over_content}"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="2"
+                      Panel.ZIndex="0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical"
+                        Margin="12, 12, 0, 12">
+
+                <TextBlock Style="{DynamicResource header_3}"
+                           Margin="8, 24, 0, 8"
+                           x:Name="TbkGenre"
+                           Text="{Binding title}" />
+                <!--Foreground="{Binding item_background}"/>-->
+
+                <StackPanel x:Name="spForAlbums"
+                            Orientation="Vertical"
+                            Margin="0, 0, 0, 24"
+                            Visibility="Collapsed">
+                    <!-- FindedAlbums -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 0, 0, 8"
+                               Text="Альбомы" />
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  Padding="0">
+                        <ListView x:Name="lvAlbums"
+                                  ItemTemplate="{StaticResource SquareAlbum}"
+                                  SelectionChanged="lvAlbums_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                        </ListView>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <StackPanel x:Name="spForTracks"
+                            Orientation="Vertical"
+                            Margin="0, 0, 0, 24"
+                            Visibility="Collapsed">
+                    <!-- FindedTracks -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 8, 0, 8"
+                               Text="Треки" />
+                    <!-- Header -->
+                    <Grid Margin="4, 4, 4, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48px" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="1.4*"
+                                              MinWidth="104px" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="8" /> <!--for separator-->
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.ColumnSpan="2"
+                                Margin="4, 0, 0, 0"
+                                Style="{StaticResource btn_header}"
+                                Content="Название"
+                                x:Name="btnFromHeaderTitle" />
+                        <Button Grid.Column="2"
+                                Style="{StaticResource btn_header}"
+                                Content="Альбом" />
+                        <Button Grid.Column="3"
+                                Style="{StaticResource btn_header}"
+                                Content="Длительность"
+                                x:Name="btnFromHeaderDuration"
+                                HorizontalAlignment="Center" />
+
+                        <Separator Grid.ColumnSpan="5"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Bottom"
+                                   Background="{StaticResource separator_background_2}" />
+                    </Grid>
+
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="0">
+                        <ListView x:Name="lvTracks"
+                                  ItemTemplate="{StaticResource LineTrack_1}"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="Padding"
+                                            Value="1" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                        </ListView>
+                    </ScrollViewer>
+
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

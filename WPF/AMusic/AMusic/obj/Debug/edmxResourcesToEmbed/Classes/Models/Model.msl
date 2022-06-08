@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище AMusicModelContainer" CdmEntityContainer="AMusicEntities">
+    <EntitySetMapping Name="Albums">
+      <EntityTypeMapping TypeName="AMusicModel.Albums">
+        <MappingFragment StoreEntitySet="Albums">
+          <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
+          <ScalarProperty Name="url_LQ_cover" ColumnName="url_LQ_cover" />
+          <ScalarProperty Name="url_HQ_cover" ColumnName="url_HQ_cover" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Artists">
+      <EntityTypeMapping TypeName="AMusicModel.Artists">
+        <MappingFragment StoreEntitySet="Artists">
+          <ScalarProperty Name="ID_artist" ColumnName="ID_artist" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="avatar_URL" ColumnName="avatar_URL" />
+          <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="AMusicModel.Countries">
+        <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="AMusicModel.Genres">
+        <MappingFragment StoreEntitySet="Genres">
+          <ScalarProperty Name="ID_genre" ColumnName="ID_genre" />
+          <ScalarProperty Name="title" ColumnName="title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="AMusicModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID_role" ColumnName="ID_role" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupportLog">
+      <EntityTypeMapping TypeName="AMusicModel.SupportLog">
+        <MappingFragment StoreEntitySet="SupportLog">
+          <ScalarProperty Name="ID_log" ColumnName="ID_log" />
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+          <ScalarProperty Name="when_added" ColumnName="when_added" />
+          <ScalarProperty Name="content" ColumnName="content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tracks">
+      <EntityTypeMapping TypeName="AMusicModel.Tracks">
+        <MappingFragment StoreEntitySet="Tracks">
+          <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="lyrics" ColumnName="lyrics" />
+          <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+          <ScalarProperty Name="id_in_album" ColumnName="id_in_album" />
+          <ScalarProperty Name="ID_genre" ColumnName="ID_genre" />
+          <ScalarProperty Name="count_of_listenings" ColumnName="count_of_listenings" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AMusicModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="avatar_URL" ColumnName="avatar_URL" />
+          <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArtistsInTracks">
+      <EntityTypeMapping TypeName="AMusicModel.ArtistsInTracks">
+        <MappingFragment StoreEntitySet="ArtistsInTracks">
+          <ScalarProperty Name="ID_artist" ColumnName="ID_artist" />
+          <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+          <ScalarProperty Name="ID_role" ColumnName="ID_role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeaturedAlbums">
+      <EntityTypeMapping TypeName="AMusicModel.FeaturedAlbums">
+        <MappingFragment StoreEntitySet="FeaturedAlbums">
+          <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+          <ScalarProperty Name="when_added" ColumnName="when_added" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeaturedTracks">
+      <EntityTypeMapping TypeName="AMusicModel.FeaturedTracks">
+        <MappingFragment StoreEntitySet="FeaturedTracks">
+          <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+          <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+          <ScalarProperty Name="when_added" ColumnName="when_added" />
+          <ScalarProperty Name="count_of_listenings" ColumnName="count_of_listenings" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

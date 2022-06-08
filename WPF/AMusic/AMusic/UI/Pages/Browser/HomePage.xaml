@@ -1,0 +1,98 @@
+﻿<Page x:Class="AMusic.UI.Pages.Browser.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AMusic.UI.Pages.Browser"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HomePage">
+
+    <Grid>
+        <ScrollViewer x:Name="svMain"
+                      Style="{StaticResource scrollviewer_over_content}"
+                      Panel.ZIndex="0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Visible">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2in" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical"
+                            Margin="12, 12, 0, 12"
+                            Grid.RowSpan="2">
+
+                    <StackPanel Orientation="Vertical"
+                                x:Name="spForLastListened"
+                                Visibility="Collapsed">
+                        <!-- LastListened -->
+                        <TextBlock Style="{DynamicResource header_1}"
+                                   Margin="8, 32, 8, 8"
+                                   Text="Недавно прослушанные" />
+                        <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Hidden"
+                                      Padding="0">
+                            <ListView x:Name="lvLastListenedTracks"
+                                      ItemTemplate="{StaticResource SquareTrack}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+
+                            </ListView>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <!-- Latest -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 32, 8, 8"
+                               Text="Новинки" />
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  Padding="0">
+                        <ListView x:Name="lvLatestAlbums"
+                                  ItemTemplate="{StaticResource SquareAlbum}"
+                                  SelectionChanged="lvLatestAlbums_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                        </ListView>
+                    </ScrollViewer>
+
+                    <!-- MostListened -->
+                    <TextBlock Style="{DynamicResource header_1}"
+                               Margin="8, 32, 8, 8"
+                               Text="Самые прослушиваемые" />
+                    <ScrollViewer PreviewMouseWheel="sv_Horizontal_PreviewMouseWheel"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Hidden"
+                                  Padding="0">
+                        <ListView x:Name="lvMostListenedTracks"
+                                  ItemTemplate="{StaticResource SquareTrack}"
+                                  SelectionChanged="lvMostListenedTracks_SelectionChanged"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                        </ListView>
+                    </ScrollViewer>
+
+                    <WrapPanel Height="32px" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

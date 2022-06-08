@@ -1,0 +1,823 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AMusicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Albums">
+          <Key>
+            <PropertyRef Name="ID_album" />
+          </Key>
+          <Property Name="ID_album" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="date_of_creation" Type="date" />
+          <Property Name="url_LQ_cover" Type="nvarchar(max)" />
+          <Property Name="url_HQ_cover" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="ID_artist" />
+          </Key>
+          <Property Name="ID_artist" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="avatar_URL" Type="nvarchar(max)" />
+          <Property Name="ID_country" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "AMusic.dbo.ArtistsInTracks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ArtistsInTracks">
+          <Key>
+            <PropertyRef Name="ID_artist" />
+            <PropertyRef Name="ID_track" />
+            <PropertyRef Name="ID_role" />
+          </Key>
+          <Property Name="ID_artist" Type="int" Nullable="false" />
+          <Property Name="ID_track" Type="int" Nullable="false" />
+          <Property Name="ID_role" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="ID_country" />
+          </Key>
+          <Property Name="ID_country" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "AMusic.dbo.FeaturedAlbums" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="FeaturedAlbums">
+          <Key>
+            <PropertyRef Name="ID_album" />
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_album" Type="int" Nullable="false" />
+          <Property Name="ID_user" Type="int" Nullable="false" />
+          <Property Name="when_added" Type="datetime" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "AMusic.dbo.FeaturedTracks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="FeaturedTracks">
+          <Key>
+            <PropertyRef Name="ID_track" />
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_track" Type="int" Nullable="false" />
+          <Property Name="ID_user" Type="int" Nullable="false" />
+          <Property Name="when_added" Type="datetime" />
+          <Property Name="count_of_listenings" Type="int" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID_genre" />
+          </Key>
+          <Property Name="ID_genre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID_role" />
+          </Key>
+          <Property Name="ID_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupportLog">
+          <Key>
+            <PropertyRef Name="ID_log" />
+          </Key>
+          <Property Name="ID_log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_user" Type="int" Nullable="false" />
+          <Property Name="when_added" Type="datetime" />
+          <Property Name="content" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tracks">
+          <Key>
+            <PropertyRef Name="ID_track" />
+          </Key>
+          <Property Name="ID_track" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="duration" Type="int" Nullable="false" />
+          <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="lyrics" Type="nvarchar(max)" />
+          <Property Name="ID_album" Type="int" Nullable="false" />
+          <Property Name="id_in_album" Type="int" />
+          <Property Name="ID_genre" Type="int" Nullable="false" />
+          <Property Name="count_of_listenings" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="int" />
+          <Property Name="login" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="avatar_URL" Type="nvarchar(max)" />
+          <Property Name="ID_country" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AIT_ID_artist">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ID_artist" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AIT_ID_role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID_role" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AIT_ID_track">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="ID_track" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_track" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artists_ID_country">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID_country" />
+            </Principal>
+            <Dependent Role="Artists">
+              <PropertyRef Name="ID_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FA_ID_album">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="FeaturedAlbums" Type="Self.FeaturedAlbums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="ID_album" />
+            </Principal>
+            <Dependent Role="FeaturedAlbums">
+              <PropertyRef Name="ID_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FA_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FeaturedAlbums" Type="Self.FeaturedAlbums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="FeaturedAlbums">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FT_ID_album">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="FeaturedTracks" Type="Self.FeaturedTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="ID_track" />
+            </Principal>
+            <Dependent Role="FeaturedTracks">
+              <PropertyRef Name="ID_track" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FT_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FeaturedTracks" Type="Self.FeaturedTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="FeaturedTracks">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SL_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SupportLog" Type="Self.SupportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="SupportLog">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracks_ID_album">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="ID_album" />
+            </Principal>
+            <Dependent Role="Tracks">
+              <PropertyRef Name="ID_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracks_ID_genre">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID_genre" />
+            </Principal>
+            <Dependent Role="Tracks">
+              <PropertyRef Name="ID_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ID_country">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID_country" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ID_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AMusicModelContainer">
+          <EntitySet Name="Albums" EntityType="Self.Albums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupportLog" EntityType="Self.SupportLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtistsInTracks" EntityType="Self.ArtistsInTracks" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ArtistsInTracks].[ID_artist] AS [ID_artist], 
+    [ArtistsInTracks].[ID_track] AS [ID_track], 
+    [ArtistsInTracks].[ID_role] AS [ID_role]
+    FROM [dbo].[ArtistsInTracks] AS [ArtistsInTracks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FeaturedAlbums" EntityType="Self.FeaturedAlbums" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FeaturedAlbums].[ID_album] AS [ID_album], 
+    [FeaturedAlbums].[ID_user] AS [ID_user], 
+    [FeaturedAlbums].[when_added] AS [when_added]
+    FROM [dbo].[FeaturedAlbums] AS [FeaturedAlbums]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FeaturedTracks" EntityType="Self.FeaturedTracks" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FeaturedTracks].[ID_track] AS [ID_track], 
+    [FeaturedTracks].[ID_user] AS [ID_user], 
+    [FeaturedTracks].[when_added] AS [when_added], 
+    [FeaturedTracks].[count_of_listenings] AS [count_of_listenings]
+    FROM [dbo].[FeaturedTracks] AS [FeaturedTracks]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AIT_ID_artist" Association="Self.FK_AIT_ID_artist">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AIT_ID_role" Association="Self.FK_AIT_ID_role">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AIT_ID_track" Association="Self.FK_AIT_ID_track">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artists_ID_country" Association="Self.FK_Artists_ID_country">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FA_ID_album" Association="Self.FK_FA_ID_album">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="FeaturedAlbums" EntitySet="FeaturedAlbums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FA_ID_user" Association="Self.FK_FA_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FeaturedAlbums" EntitySet="FeaturedAlbums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FT_ID_album" Association="Self.FK_FT_ID_album">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="FeaturedTracks" EntitySet="FeaturedTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FT_ID_user" Association="Self.FK_FT_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FeaturedTracks" EntitySet="FeaturedTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SL_ID_user" Association="Self.FK_SL_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SupportLog" EntitySet="SupportLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracks_ID_album" Association="Self.FK_Tracks_ID_album">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Tracks" EntitySet="Tracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracks_ID_genre" Association="Self.FK_Tracks_ID_genre">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Tracks" EntitySet="Tracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ID_country" Association="Self.FK_Users_ID_country">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AMusicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Albums">
+          <Key>
+            <PropertyRef Name="ID_album" />
+          </Key>
+          <Property Name="ID_album" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_creation" Type="DateTime" Precision="0" />
+          <Property Name="url_LQ_cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="url_HQ_cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FeaturedAlbums" Relationship="Self.FK_FA_ID_album" FromRole="Albums" ToRole="FeaturedAlbums" />
+          <NavigationProperty Name="Tracks" Relationship="Self.FK_Tracks_ID_album" FromRole="Albums" ToRole="Tracks" />
+        </EntityType>
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="ID_artist" />
+          </Key>
+          <Property Name="ID_artist" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="avatar_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID_country" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ArtistsInTracks" Relationship="Self.FK_AIT_ID_artist" FromRole="Artists" ToRole="ArtistsInTracks" />
+          <NavigationProperty Name="Countries" Relationship="Self.FK_Artists_ID_country" FromRole="Artists" ToRole="Countries" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="ID_country" />
+          </Key>
+          <Property Name="ID_country" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Artists" Relationship="Self.FK_Artists_ID_country" FromRole="Countries" ToRole="Artists" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_ID_country" FromRole="Countries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="ID_genre" />
+          </Key>
+          <Property Name="ID_genre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tracks" Relationship="Self.FK_Tracks_ID_genre" FromRole="Genres" ToRole="Tracks" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID_role" />
+          </Key>
+          <Property Name="ID_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ArtistsInTracks" Relationship="Self.FK_AIT_ID_role" FromRole="Roles" ToRole="ArtistsInTracks" />
+        </EntityType>
+        <EntityType Name="SupportLog">
+          <Key>
+            <PropertyRef Name="ID_log" />
+          </Key>
+          <Property Name="ID_log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_user" Type="Int32" Nullable="false" />
+          <Property Name="when_added" Type="DateTime" Precision="3" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_SL_ID_user" FromRole="SupportLog" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Tracks">
+          <Key>
+            <PropertyRef Name="ID_track" />
+          </Key>
+          <Property Name="ID_track" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID_album" Type="Int32" Nullable="false" />
+          <Property Name="id_in_album" Type="Int32" />
+          <Property Name="ID_genre" Type="Int32" Nullable="false" />
+          <Property Name="count_of_listenings" Type="Int32" />
+          <NavigationProperty Name="Albums" Relationship="Self.FK_Tracks_ID_album" FromRole="Tracks" ToRole="Albums" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK_Tracks_ID_genre" FromRole="Tracks" ToRole="Genres" />
+          <NavigationProperty Name="ArtistsInTracks" Relationship="Self.FK_AIT_ID_track" FromRole="Tracks" ToRole="ArtistsInTracks" />
+          <NavigationProperty Name="FeaturedTracks" Relationship="Self.FK_FT_ID_album" FromRole="Tracks" ToRole="FeaturedTracks" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="login" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="avatar_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID_country" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="Self.FK_Users_ID_country" FromRole="Users" ToRole="Countries" />
+          <NavigationProperty Name="SupportLog" Relationship="Self.FK_SL_ID_user" FromRole="Users" ToRole="SupportLog" />
+          <NavigationProperty Name="FeaturedAlbums" Relationship="Self.FK_FA_ID_user" FromRole="Users" ToRole="FeaturedAlbums" />
+          <NavigationProperty Name="FeaturedTracks" Relationship="Self.FK_FT_ID_user" FromRole="Users" ToRole="FeaturedTracks" />
+        </EntityType>
+        <EntityType Name="ArtistsInTracks">
+          <Key>
+            <PropertyRef Name="ID_artist" />
+            <PropertyRef Name="ID_track" />
+            <PropertyRef Name="ID_role" />
+          </Key>
+          <Property Name="ID_artist" Type="Int32" Nullable="false" />
+          <Property Name="ID_track" Type="Int32" Nullable="false" />
+          <Property Name="ID_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Artists" Relationship="Self.FK_AIT_ID_artist" FromRole="ArtistsInTracks" ToRole="Artists" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_AIT_ID_role" FromRole="ArtistsInTracks" ToRole="Roles" />
+          <NavigationProperty Name="Tracks" Relationship="Self.FK_AIT_ID_track" FromRole="ArtistsInTracks" ToRole="Tracks" />
+        </EntityType>
+        <EntityType Name="FeaturedAlbums">
+          <Key>
+            <PropertyRef Name="ID_album" />
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_album" Type="Int32" Nullable="false" />
+          <Property Name="ID_user" Type="Int32" Nullable="false" />
+          <Property Name="when_added" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Albums" Relationship="Self.FK_FA_ID_album" FromRole="FeaturedAlbums" ToRole="Albums" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_FA_ID_user" FromRole="FeaturedAlbums" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="FeaturedTracks">
+          <Key>
+            <PropertyRef Name="ID_track" />
+            <PropertyRef Name="ID_user" />
+          </Key>
+          <Property Name="ID_track" Type="Int32" Nullable="false" />
+          <Property Name="ID_user" Type="Int32" Nullable="false" />
+          <Property Name="when_added" Type="DateTime" Precision="3" />
+          <Property Name="count_of_listenings" Type="Int32" />
+          <NavigationProperty Name="Tracks" Relationship="Self.FK_FT_ID_album" FromRole="FeaturedTracks" ToRole="Tracks" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_FT_ID_user" FromRole="FeaturedTracks" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_FA_ID_album">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="FeaturedAlbums" Type="Self.FeaturedAlbums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="ID_album" />
+            </Principal>
+            <Dependent Role="FeaturedAlbums">
+              <PropertyRef Name="ID_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracks_ID_album">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="ID_album" />
+            </Principal>
+            <Dependent Role="Tracks">
+              <PropertyRef Name="ID_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AIT_ID_artist">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ID_artist" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artists_ID_country">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID_country" />
+            </Principal>
+            <Dependent Role="Artists">
+              <PropertyRef Name="ID_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ID_country">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="ID_country" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ID_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracks_ID_genre">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="ID_genre" />
+            </Principal>
+            <Dependent Role="Tracks">
+              <PropertyRef Name="ID_genre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AIT_ID_role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID_role" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SL_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SupportLog" Type="Self.SupportLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="SupportLog">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AIT_ID_track">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="ArtistsInTracks" Type="Self.ArtistsInTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="ID_track" />
+            </Principal>
+            <Dependent Role="ArtistsInTracks">
+              <PropertyRef Name="ID_track" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FT_ID_album">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="FeaturedTracks" Type="Self.FeaturedTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="ID_track" />
+            </Principal>
+            <Dependent Role="FeaturedTracks">
+              <PropertyRef Name="ID_track" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FA_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FeaturedAlbums" Type="Self.FeaturedAlbums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="FeaturedAlbums">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FT_ID_user">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FeaturedTracks" Type="Self.FeaturedTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID_user" />
+            </Principal>
+            <Dependent Role="FeaturedTracks">
+              <PropertyRef Name="ID_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AMusicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="Self.Albums" />
+          <EntitySet Name="Artists" EntityType="Self.Artists" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="SupportLog" EntityType="Self.SupportLog" />
+          <EntitySet Name="Tracks" EntityType="Self.Tracks" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="ArtistsInTracks" EntityType="Self.ArtistsInTracks" />
+          <EntitySet Name="FeaturedAlbums" EntityType="Self.FeaturedAlbums" />
+          <EntitySet Name="FeaturedTracks" EntityType="Self.FeaturedTracks" />
+          <AssociationSet Name="FK_FA_ID_album" Association="Self.FK_FA_ID_album">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="FeaturedAlbums" EntitySet="FeaturedAlbums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracks_ID_album" Association="Self.FK_Tracks_ID_album">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Tracks" EntitySet="Tracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AIT_ID_artist" Association="Self.FK_AIT_ID_artist">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artists_ID_country" Association="Self.FK_Artists_ID_country">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ID_country" Association="Self.FK_Users_ID_country">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracks_ID_genre" Association="Self.FK_Tracks_ID_genre">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Tracks" EntitySet="Tracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AIT_ID_role" Association="Self.FK_AIT_ID_role">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SL_ID_user" Association="Self.FK_SL_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SupportLog" EntitySet="SupportLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AIT_ID_track" Association="Self.FK_AIT_ID_track">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="ArtistsInTracks" EntitySet="ArtistsInTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FT_ID_album" Association="Self.FK_FT_ID_album">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="FeaturedTracks" EntitySet="FeaturedTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FA_ID_user" Association="Self.FK_FA_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FeaturedAlbums" EntitySet="FeaturedAlbums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FT_ID_user" Association="Self.FK_FT_ID_user">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FeaturedTracks" EntitySet="FeaturedTracks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AMusicModelContainer" CdmEntityContainer="AMusicEntities">
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="AMusicModel.Albums">
+              <MappingFragment StoreEntitySet="Albums">
+                <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
+                <ScalarProperty Name="url_LQ_cover" ColumnName="url_LQ_cover" />
+                <ScalarProperty Name="url_HQ_cover" ColumnName="url_HQ_cover" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="AMusicModel.Artists">
+              <MappingFragment StoreEntitySet="Artists">
+                <ScalarProperty Name="ID_artist" ColumnName="ID_artist" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="avatar_URL" ColumnName="avatar_URL" />
+                <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="AMusicModel.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="AMusicModel.Genres">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="ID_genre" ColumnName="ID_genre" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AMusicModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="ID_role" ColumnName="ID_role" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupportLog">
+            <EntityTypeMapping TypeName="AMusicModel.SupportLog">
+              <MappingFragment StoreEntitySet="SupportLog">
+                <ScalarProperty Name="ID_log" ColumnName="ID_log" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="when_added" ColumnName="when_added" />
+                <ScalarProperty Name="content" ColumnName="content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tracks">
+            <EntityTypeMapping TypeName="AMusicModel.Tracks">
+              <MappingFragment StoreEntitySet="Tracks">
+                <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="lyrics" ColumnName="lyrics" />
+                <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+                <ScalarProperty Name="id_in_album" ColumnName="id_in_album" />
+                <ScalarProperty Name="ID_genre" ColumnName="ID_genre" />
+                <ScalarProperty Name="count_of_listenings" ColumnName="count_of_listenings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AMusicModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="avatar_URL" ColumnName="avatar_URL" />
+                <ScalarProperty Name="ID_country" ColumnName="ID_country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtistsInTracks">
+            <EntityTypeMapping TypeName="AMusicModel.ArtistsInTracks">
+              <MappingFragment StoreEntitySet="ArtistsInTracks">
+                <ScalarProperty Name="ID_artist" ColumnName="ID_artist" />
+                <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+                <ScalarProperty Name="ID_role" ColumnName="ID_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeaturedAlbums">
+            <EntityTypeMapping TypeName="AMusicModel.FeaturedAlbums">
+              <MappingFragment StoreEntitySet="FeaturedAlbums">
+                <ScalarProperty Name="ID_album" ColumnName="ID_album" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="when_added" ColumnName="when_added" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeaturedTracks">
+            <EntityTypeMapping TypeName="AMusicModel.FeaturedTracks">
+              <MappingFragment StoreEntitySet="FeaturedTracks">
+                <ScalarProperty Name="ID_track" ColumnName="ID_track" />
+                <ScalarProperty Name="ID_user" ColumnName="ID_user" />
+                <ScalarProperty Name="when_added" ColumnName="when_added" />
+                <ScalarProperty Name="count_of_listenings" ColumnName="count_of_listenings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
